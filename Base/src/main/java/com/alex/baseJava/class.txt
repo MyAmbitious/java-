@@ -1,0 +1,2 @@
+className=com.alex.baseJava.reflect.itcast.test.Worker
+methodName=love
