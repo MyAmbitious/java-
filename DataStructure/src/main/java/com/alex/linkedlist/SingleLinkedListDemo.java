@@ -1,5 +1,8 @@
 package com.alex.linkedlist;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 //定义HeroNode，每个HeroNode对象就是一个节点
 class HeroNode {
     public Integer no;
@@ -28,6 +31,10 @@ class HeroNode {
 class SingleLinkedList {
     //先初始化一个头节点 ，注意 头结点不要动，也不要存放具体的数据
     private HeroNode head = new HeroNode(null, "", "");
+
+    public HeroNode getHead() {
+        return head;
+    }
 
     //    添加节点到单向链表
 //    思路 当不考虑编号的顺序的时候
@@ -104,17 +111,18 @@ class SingleLinkedList {
             if (temp.next.no == heroNode.no) {
                 break;
             }
-            if(temp.next==null){
-                flag=false;
+            if (temp.next == null) {
+                flag = false;
                 break;
             }
         }
-        if(!flag){
+        if (!flag) {
             throw new RuntimeException("链表中没有找到符合删除添加的节点");
-        }else {
-            temp.next=temp.next.next;
+        } else {
+            temp.next = temp.next.next;
         }
     }
+
 
     //    遍历链表元素
     public void showLinkedList() {
@@ -128,28 +136,115 @@ class SingleLinkedList {
             temp = temp.next;
         }
     }
-
 }
 
 public class SingleLinkedListDemo {
+
+
+    //方法：获取到单链表的节点得个数（如果是带头结点的链表，则不统计该头节点）
+    public static int getLength(HeroNode head) {
+        //    判断是否为空
+        if (head.next == null) {
+            System.out.println("链表为空");
+            return -1;
+        }
+        HeroNode temp = head.next;
+        int length = 0;
+        while (temp != null) {//空链表
+            length++;
+            temp = temp.next;
+        }
+        return length;
+    }
+
+    //获取单链表中倒数第k个节点
+    public static HeroNode getK(HeroNode head, int k) {
+        if (head == null) {
+            throw new RuntimeException("链表为空");
+        }
+        if (k <= 0) {
+            throw new RuntimeException("输入的k值应该大于0");
+        }
+        HeroNode temp = head.next;
+        HeroNode node = null;
+        //    先获取链表中的有效节点个数
+        final int length = getLength(head);
+        if (length < k) {
+            throw new RuntimeException("输入的k值过大，超过了链表长度");
+        }
+        // 获取倒数第K个节点 就是获取正数第(length-k+1)个节点
+        for (int i = 1; i <= length - k + 1; i++) {
+            node = temp;
+            temp = temp.next;
+        }
+        return node;
+    }
+
+
+    //    （带头节点的）单链表反转
+    public static void reverseLinkedList(HeroNode head) {
+        //如果当前链表为空 或者只有一个节点 则无需反转，直接返回即可
+        if (head.next == null || head.next.next == null) {
+            return;
+        }
+        //定义一个辅助的指针变量，帮助我们遍历原来的链表
+        HeroNode reverseHead = new HeroNode(null, "", "");
+        HeroNode curl = head.next;
+        HeroNode next = null;
+        //遍历原来的链表 每遍历一个节点 就将其取出 并放在当前节点的下一个节点 因为后面需要使用
+        while (curl != null) {
+            next = curl.next; //先暂时保存当前节点的下一个节点 因为后面要用到
+            curl.next = reverseHead.next;//每次变量 都将curl的下一个节点指向新的链表的最前端
+            reverseHead.next = curl;//跟64 65 行将新节点插入到链表中的原理一样 “先连后 再断前”
+            curl = next;//让cur后移
+        }
+        head.next = reverseHead.next;
+    }
+
+    //逆序打印单链表的所有节点--------思路：1利用栈的数据结构 2利用ArrayList
+    public static void reversePrint(HeroNode head) {
+        if (head.next == null) {
+            throw new RuntimeException("该链表为空，无法逆序打印");
+        }
+        HeroNode tmp = head.next;
+        Stack<HeroNode> stack = new Stack<>();
+        ArrayList<HeroNode> list = new ArrayList<>();
+        while (tmp != null) {
+            // stack.push(tmp);
+            list.add(0,tmp);
+            tmp = tmp.next;
+        }
+        // while (!stack.empty()) {
+        //     System.out.println(stack.pop());
+        // }
+      for(HeroNode node :list){
+          System.out.println(node);
+      }
+    }
+
     public static void main(String[] args) {
         SingleLinkedList list = new SingleLinkedList();
-        // list.addToRear(new HeroNode(1, "宋江", "及时雨"));
-        // list.addToRear(new HeroNode(2, "李逵", "黑旋风"));
-        // list.addToRear(new HeroNode(4, "林冲", "豹子头"));
-        // list.addToRear(new HeroNode(3, "吴用", "智多星"));
-
         list.addByOrder(new HeroNode(3, "宋江", "及时雨"));
         list.addByOrder(new HeroNode(2, "李逵", "黑旋风"));
         list.addByOrder(new HeroNode(4, "林冲", "豹子头"));
         list.addByOrder(new HeroNode(1, "吴用", "智多星"));
         list.addByOrder(new HeroNode(1, "吴用", "智多星"));
         list.showLinkedList();
-        System.out.println("----------修改节点测试------------");
-        list.update(new HeroNode(1, "宋江", "及时雨"));
-        list.showLinkedList();
-        System.out.println("--------------删除节点测试---------");
-        list.remove(new HeroNode(1, "宋江", "及时雨"));
-        list.showLinkedList();
+        // System.out.println("----------修改节点测试------------");
+        // list.update(new HeroNode(1, "宋江", "及时雨"));
+        // list.showLinkedList();
+        // System.out.println("--------------删除节点测试---------");
+        // list.remove(new HeroNode(1, "宋江", "及时雨"));
+        // list.showLinkedList();
+        // System.out.println("-----------------获取到链表中有效节点的个数------------");
+        // System.out.println(getLength(list.getHead()));
+        // System.out.println("-----------------获取到链表中倒数第K个节点------------");
+        // System.out.println(getK(list.getHead(),3));
+        // System.out.println("-----------------单链表进行反转------------");
+        // reverseLinkedList(list.getHead());
+        // list.showLinkedList();
+
+        System.out.println("逆序打印链表测试");
+        reversePrint(list.getHead());
     }
 }

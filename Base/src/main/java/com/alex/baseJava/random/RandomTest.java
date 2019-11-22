@@ -10,6 +10,10 @@ public class RandomTest {
             int number = r.nextInt(10);
             //4. 输出数据
             System.out.println("number:"+ number);
+
+
         }
+        int i=(int)(Math.random()*100);       //  生成0-100的随机数，包括0不包括100 -- [0,100)
+        System.out.println(i);
     }
 }

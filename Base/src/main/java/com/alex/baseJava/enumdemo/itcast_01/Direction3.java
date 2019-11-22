@@ -2,7 +2,7 @@ package com.alex.baseJava.enumdemo.itcast_01;
 
 //多态原理 编译看左边 运行看右边
 public abstract class Direction3 {
-	// ��������ʵ��
+
 	public static final Direction3 FRONT = new Direction3("前") {
 		@Override
 		public void show() {
@@ -47,6 +47,6 @@ public abstract class Direction3 {
 		return name;
 	}
 
-	// ������󷽷�
+
 	public abstract void show();
 }

@@ -16,7 +16,7 @@ package com.alex.concurrency.juc;
 /**
  * volatile 底层原理 https://blog.csdn.net/zezezuiaiya/article/details/81456060
  * volatile 关键字：当多个线程进行共享数据是 可以保证内存中的数据可见 相较于synchronized关键字是一种较为轻量级的同步策略
- *
+ *volatile 保证可见性 不保证原子性 禁止指令重排
  * 注意
  * 1 volatile不具有互斥性
  * 2 volatile不能保证变量的原子性
