@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>28.1-jre</version>
+            <version>29.0-jre</version>
         </dependency>
         <!--单机版 hadoop 数据分析 22秒内将500,000,000行（每行4个字段）的数据文件加载到10G的内存中-->
         <dependency>
